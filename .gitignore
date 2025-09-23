@@ -1,0 +1,11 @@
+.env
+node_modules
+**/.env
+**/node_modules
+dist
+.next
+.vscode
+/mnt/data
+*.tfstate
+*.tfstate.*
+.terraform

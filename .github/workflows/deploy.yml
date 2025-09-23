@@ -1,0 +1,57 @@
+name: CI/CD Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+      REGION: us-central1
+      ARTIFACT_REPO: inovarepo
+      PORT: 4000
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+
+      # Authenticate with GCP
+      - name: Set up Cloud credentials
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      # Configure Docker to push to Artifact Registry
+      - name: Configure docker for Artifact Registry
+        run: |
+          gcloud --quiet auth configure-docker ${REGION}-docker.pkg.dev
+
+      # Build & push API Docker image with PORT argument
+      - name: Build & push API image
+        run: |
+          docker build --build-arg PORT=${PORT} \
+            -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-api:${{ github.sha }} ./api
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-api:${{ github.sha }}
+
+      # Replace image tag in Terraform variables
+      - name: Replace image tag in Terraform (local var)
+        run: |
+          echo "image_tag = \"${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-api:${{ github.sha }}\"" > infra/terraform.tfvars
+
+      # Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      # Terraform Init
+      - name: Terraform Init
+        working-directory: infra
+        run: terraform init
+
+      # Terraform Apply
+      - name: Terraform Apply
+        working-directory: infra
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        run: terraform apply -auto-approve
