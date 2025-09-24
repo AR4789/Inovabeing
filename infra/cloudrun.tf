@@ -31,7 +31,7 @@ resource "google_cloud_run_service" "api" {
 
          env {
           name  = "JWT_SECRET"
-          value = var.jwt_secret   # pass this in terraform.tfvars or GitHub Secrets
+          value = var.jwt_secret   
         }
 
         env {
