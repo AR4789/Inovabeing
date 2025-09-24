@@ -29,6 +29,11 @@ resource "google_cloud_run_service" "api" {
           value = "postgresql://inova_user:${var.db_password}@/inovadb?host=/cloudsql/${google_sql_database_instance.postgres.connection_name}"
         }
 
+         env {
+          name  = "JWT_SECRET"
+          value = var.jwt_secret   # pass this in terraform.tfvars or GitHub Secrets
+        }
+
         env {
           name  = "API_KEY"
           value = var.webhook_api_key
