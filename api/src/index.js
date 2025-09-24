@@ -11,6 +11,12 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
+app.use(cors({
+  origin: "https://inova-web-zdfnnfsjza-uc.a.run.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use('/api/auth', authRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/campaigns', authMiddleware, campaignsRoutes);
