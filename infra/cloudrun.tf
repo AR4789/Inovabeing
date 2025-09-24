@@ -47,3 +47,25 @@ resource "google_cloud_run_service" "api" {
 
   autogenerate_revision_name = true
 }
+
+resource "google_cloud_run_service" "web" {
+  name     = "inova-web"
+  location = var.region
+
+  template {
+    spec {
+      containers {
+        image = var.web_image_tag
+        ports {
+          container_port = 80
+        }
+      }
+    }
+  }
+
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+}
+

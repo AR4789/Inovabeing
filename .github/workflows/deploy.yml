@@ -50,7 +50,7 @@ jobs:
       # Replace frontend image tag in Terraform
       - name: Replace frontend image tag in Terraform (local var)
         run: |
-          echo "frontend_image_tag = \"${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }}\"" >> infra/terraform.tfvars
+          echo "web_image_tag = \"${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }}\"" >> infra/terraform.tfvars
 
 
       # Setup Terraform

@@ -29,3 +29,10 @@ variable "image_tag" {
   type    = string
   default = "latest"
 }
+
+variable "web_image_tag" {
+  description = "Web Docker image tag"
+  type        = string
+  defaulr = "latest"
+}
+
