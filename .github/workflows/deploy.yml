@@ -44,13 +44,13 @@ jobs:
       # Build & push Frontend Docker image
       - name: Build & push Frontend image
         run: |
-          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-frontend:${{ github.sha }} ./frontend
-          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-frontend:${{ github.sha }}
+          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }} ./frontend
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }}
 
       # Replace frontend image tag in Terraform
       - name: Replace frontend image tag in Terraform (local var)
         run: |
-          echo "frontend_image_tag = \"${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-frontend:${{ github.sha }}\"" >> infra/terraform.tfvars
+          echo "frontend_image_tag = \"${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }}\"" >> infra/terraform.tfvars
 
 
       # Setup Terraform
