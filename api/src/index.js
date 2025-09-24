@@ -10,6 +10,7 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
+app.options("*", cors());
 
 app.use(cors({
   origin: "https://inova-web-zdfnnfsjza-uc.a.run.app",
