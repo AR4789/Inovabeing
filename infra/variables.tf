@@ -36,3 +36,10 @@ variable "web_image_tag" {
   default = "latest"
 }
 
+variable "jwt_secret" {
+  description = "JWT secret for signing tokens in the backend"
+  type        = string
+  sensitive   = true
+}
+
+
