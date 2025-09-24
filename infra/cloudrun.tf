@@ -34,7 +34,7 @@ resource "google_cloud_run_service" "api" {
           value = var.webhook_api_key
         }
 
-        ports { container_port = 8080 }
+        ports { container_port = 4000 }
       }
 
     }
