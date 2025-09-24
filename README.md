@@ -53,7 +53,7 @@ npm run dev
 See `infra/README.md` for step-by-step instructions before running Terraform.
 
 ## What's included
-- Minimal but complete backend with auth, campaigns, leads, webhook.
+- Minimal but complete backend with auth, campaigns, leads and webhook.
 - Next.js frontend with pages for auth, campaigns, campaign details, dashboard stub, webhook settings.
 - Terraform snippets for GCP resources (adjust variables).
 - GitHub Actions CI workflow skeleton that builds and pushes Docker images and runs Terraform.
