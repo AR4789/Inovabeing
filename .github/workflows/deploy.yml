@@ -17,15 +17,14 @@ jobs:
       # Checkout the repo
       - uses: actions/checkout@v4
 
-      # Authenticate with GCP
-      - name: Set up Cloud credentials
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+      # Write service account key to a file
+      - name: Set up GCP credentials
+        run: echo '${{ secrets.GCP_SA_KEY }}' > $HOME/gcp-key.json
 
       # Configure Docker to push to Artifact Registry
       - name: Configure docker for Artifact Registry
         run: |
+          gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
           gcloud --quiet auth configure-docker ${REGION}-docker.pkg.dev
 
       # Build & push API Docker image with PORT argument
@@ -47,13 +46,20 @@ jobs:
       # Terraform Init
       - name: Terraform Init
         working-directory: infra
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp-key.json
         run: terraform init
 
       # Terraform Apply
       - name: Terraform Apply
         working-directory: infra
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-        run: terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT }}" -var="region=us-central1" -var="db_password=${{ secrets.DB_PASSWORD }}" -var="db_instance_name=inovadb-instance" -var="artifact_repo=inovarepo" -var="webhook_api_key=${{ secrets.WEBHOOK_API_KEY }}" -var="image_tag=${{ github.sha }}"
-
-
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp-key.json
+        run: terraform apply -auto-approve \
+          -var="project_id=${{ secrets.GCP_PROJECT }}" \
+          -var="region=us-central1" \
+          -var="db_password=${{ secrets.DB_PASSWORD }}" \
+          -var="db_instance_name=inovadb-instance" \
+          -var="artifact_repo=inovarepo" \
+          -var="webhook_api_key=${{ secrets.WEBHOOK_API_KEY }}" \
+          -var="image_tag=${{ github.sha }}"
