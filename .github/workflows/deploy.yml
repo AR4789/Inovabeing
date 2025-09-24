@@ -21,7 +21,7 @@ jobs:
       - name: Set up GCP credentials
         run: |
           mkdir -p $HOME
-          echo "${{ secrets.GCP_SA_KEY }}" > $HOME/gcp-key.json
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > $HOME/gcp-key.json
 
       # Configure Docker to push to Artifact Registry
       - name: Configure docker for Artifact Registry
