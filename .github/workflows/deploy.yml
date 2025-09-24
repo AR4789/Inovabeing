@@ -44,7 +44,7 @@ jobs:
       # Build & push Frontend Docker image
       - name: Build & push Frontend image
         run: |
-          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }} ./frontend
+          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }} ./web
           docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/inova-web:${{ github.sha }}
 
       # Replace frontend image tag in Terraform
