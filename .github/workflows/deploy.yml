@@ -55,11 +55,5 @@ jobs:
         working-directory: infra
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp-key.json
-        run: terraform apply -auto-approve \
-          -var="project_id=${{ secrets.GCP_PROJECT }}" \
-          -var="region=us-central1" \
-          -var="db_password=${{ secrets.DB_PASSWORD }}" \
-          -var="db_instance_name=inovadb-instance" \
-          -var="artifact_repo=inovarepo" \
-          -var="webhook_api_key=${{ secrets.WEBHOOK_API_KEY }}" \
-          -var="image_tag=${{ github.sha }}"
+        run: terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT }}" -var="region=us-central1" -var="db_password=${{ secrets.DB_PASSWORD }}" -var="db_instance_name=inovadb-instance" -var="artifact_repo=inovarepo" -var="webhook_api_key=${{ secrets.WEBHOOK_API_KEY }}" -var="image_tag=${{ github.sha }}"
+
