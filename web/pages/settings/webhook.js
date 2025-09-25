@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import api from '../lib/api';
+
 
 export default function WebhookSettings() {
   const [origin, setOrigin] = useState(null);  // ✅ no <string | null>
@@ -13,7 +15,7 @@ export default function WebhookSettings() {
 
   const webhookUrl = origin
     ? `${origin}/api/webhooks/leads.ingest`
-    : "https://your-cloud-run-url/api/webhooks/leads.ingest";
+    : "https://inova-web-zdfnnfsjza-uc.a.run.app/api/webhooks/leads.ingest";
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
