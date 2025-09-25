@@ -5,8 +5,8 @@ export default function Home() {
   const router = useRouter();
 
   function logout() {
-    localStorage.removeItem('token'); // clear JWT
-    router.push('/login'); // redirect to login
+    localStorage.removeItem('token');
+    router.push('/'); 
   }
 
   return (
