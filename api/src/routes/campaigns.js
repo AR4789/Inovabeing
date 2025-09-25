@@ -28,9 +28,19 @@ router.put('/:id', async (req,res)=>{
   res.json(r.rows[0]);
 });
 
-router.delete('/:id', async (req,res)=>{
-  await db.query('DELETE FROM campaigns WHERE id=$1', [req.params.id]);
-  res.status(204).send();
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const r = await db.query('DELETE FROM campaigns WHERE id=$1 RETURNING *', [req.params.id]);
+    if (!r.rows[0]) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+    res.status(200).json({ message: 'Campaign deleted', campaign: r.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
+
 
 module.exports = router;

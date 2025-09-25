@@ -6,7 +6,13 @@ This repository contains a complete starter project for the InovaBeing Full-Stac
 - Infra: Terraform for GCP (Cloud SQL, Artifact Registry, Secret Manager, Cloud Run)
 - CI/CD: GitHub Actions workflow (build and deploy)
 
+
 > **IMPORTANT**: This starter is meant to be a working scaffold. Before deploying to GCP, create a GCP project, a Service Account JSON and add credentials/secrets to GitHub. See `infra/README.md` for details.
+
+
+## Application Url
+https://inova-web-zdfnnfsjza-uc.a.run.app
+
 
 ## Repo layout
 ```
