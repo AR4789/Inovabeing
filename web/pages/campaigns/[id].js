@@ -1,7 +1,6 @@
 import api from '../../lib/api';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
 
 
 export default function CampaignDetail(){
@@ -16,7 +15,6 @@ export default function CampaignDetail(){
     }catch(err){ alert('add failed') }
   }
   return (
-    <Layout>
     <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-2xl">Campaign {id}</h1>
       <form onSubmit={add} className="my-4 flex gap-2">
@@ -28,6 +26,5 @@ export default function CampaignDetail(){
         <tbody>{leads.map(l=> <tr key={l.id} className="border-t"><td className="py-1">{l.id}</td><td>{l.email}</td><td>{l.stage}</td><td>{l.score}</td></tr>)}</tbody>
       </table>
     </div>
-    </Layout>
   );
 }
