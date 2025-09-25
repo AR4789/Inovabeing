@@ -15,7 +15,7 @@ export default function WebhookSettings() {
 
   const webhookUrl = origin
     ? `${origin}/api/webhooks/leads.ingest`
-    : "https://inova-web-zdfnnfsjza-uc.a.run.app/api/webhooks/leads.ingest";
+    : "https://inova-api-zdfnnfsjza-uc.a.run.app/api/webhooks/leads.ingest";
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
