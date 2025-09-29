@@ -1,4 +1,4 @@
-# InovaBeing — Assignment (Full-Stack) - Git-ready starter repo
+# InovaBeing — Assignment (Full-Stack)
 
 This repository contains a complete starter project for the InovaBeing Full-Stack assignment:
 - Backend: Node.js + Express + Postgres
